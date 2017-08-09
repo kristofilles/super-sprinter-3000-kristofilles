@@ -10,16 +10,23 @@ def route_list():
     with open('list.csv', 'r') as listForms:
         reader = csv.reader(listForms)
         readlist = [row for row in reader]
+    print(reader)
     print(readlist)
     return render_template('list.html', readlist=readlist)
 
 
 @app.route('/story')
 def route_edit():
-    note_text = None
-    if 'note' in 'list.csv':
-        note_text = 'list.csv'['note']
-    return render_template('form.html', note=note_text)
+    return render_template('form.html')
+
+
+@app.route('/story/<entry_id>')
+def edit_story(entry_id):
+    with open('list.csv', 'r') as d:
+        for row in x:
+            if entry_id == row[0]:
+                value = row[0]
+    return render_template('form.html', value=value, entry_id=entry_id)
 
 
 @app.route('/save', methods=['POST'])
@@ -30,10 +37,13 @@ def route_save():
     Business_value = request.form['Business value']
     Estimation = request.form['Estimation']
     Status = request.form['Status']
-    
-    f = open('list.csv', 'a')
-    f.write(','.join([Story_title, User_Story, Acceptance_criteria, Business_value, Estimation, Status])+'\n')
-    f.close()
+    with open('list.csv', 'r') as f:
+        reader = csv.reader(f)
+        readlist = [row for row in reader]
+    x = int(readlist[-1][0])
+    with open('list.csv', 'a') as f:
+        x += 1
+        f.write(','.join([str(x), Story_title, User_Story, Acceptance_criteria, Business_value, Estimation, Status])+'\n')
     return redirect('/')
 
 

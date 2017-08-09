@@ -20,17 +20,17 @@
             </tr>
             {%for line in readlist%}
             <tr>
-                <td>{{line[0]}}</td>
+                <td>{{loop.index}}</td>
                 <td>{{line[1]}}</td>
                 <td>{{line[2]}}</td>
                 <td>{{line[3]}}</td>
                 <td>{{line[4]}}</td>
                 <td>{{line[5]}}</td>
                 <td>{{line[6]}}</td>
+                <td><a href="/story/{{loop.index}}"><img src=http://simpleicon.com/wp-content/uploads/pencil.png height=20 width=20></img></a></td>
+                <td><a href="/story/{{loop.index}}"><img src=https://png.icons8.com/trash-can/win8/1600 height=20 width=20></img></a></td>
             </tr>
             {%endfor%}
         </table>
-        <a href="/story"><i style="font-size:24px" class="fa">&#xE150;</i></a>
     </body>
-
 </html>
