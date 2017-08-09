@@ -18,15 +18,17 @@
                 <td>Estimation (h)</td>
                 <td>Status</td>
             </tr>
+            {%for line in readlist%}
             <tr>
-                <td>1</td>
-                <td>dasdsad</td>
-                <td>sdsadassad</td>
-                <td>dasdsad</td>
-                <td>500</td>
-                <td>12</td>
-                <td>in Progress</td>
+                <td>{{line[0]}}</td>
+                <td>{{line[1]}}</td>
+                <td>{{line[2]}}</td>
+                <td>{{line[3]}}</td>
+                <td>{{line[4]}}</td>
+                <td>{{line[5]}}</td>
+                <td>{{line[6]}}</td>
             </tr>
+            {%endfor%}
         </table>
         <a href="/story"><i style="font-size:24px" class="fa">&#xE150;</i></a>
     </body>
