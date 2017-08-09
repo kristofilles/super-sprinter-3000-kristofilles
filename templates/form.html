@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Super Sprinter 3000 - Add new Story</title>
+    </head>
+    <body>
+        <h1>User Story manager - Add new Story</h1>
+        <p>Story title</p>
+        <form action="list.csv" method="POST">
+            <input type="text">
+        </form>
+        <p>User Story</p>
+        <form action="list.csv" method="POST">
+            <textarea rows="5" cols="20"></textarea>
+        </form>
+        <p>Acceptance criteria</p>
+        <form action="list.csv" method="POST">
+            <textarea rows="5" cols="20"></textarea>
+        </form>
+        <p>Business value</p>
+        <form action="list.csv" method="POST">
+            <input type="number" value="1000" placeholder="multiple of 100" step="100" min="100" max="1500">
+        </form>
+        <p>Estimation (h)</p>
+        <form action="list.csv" method="POST">
+            <input type="number" value="2.5" placeholder="multiple of 0.5" step="0.5" min="0.5" max="40">
+        </form>
+        <p>Status</p>
+        <form action="list.csv" method="POST">
+            <select>
+                <option>Planning</option>
+                <option>TODO</option>
+                <option>In Progress</option>
+                <option>Review</option>
+                <option>Done</option>
+            </select>
+            <input type="submit" value="Create">
+        </form>
+    </body>
+</html>
