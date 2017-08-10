@@ -5,15 +5,19 @@
         <title>Super Sprinter 3000 - Add new Story</title>
     </head>
     <body>
+        {% if update is not none %}
+        <h1>User Story manager - Edit Story</h1>
+        {% else %}
         <h1>User Story manager - Add new Story</h1>
+        {% endif %}
         <form action="/save" method="POST">
-            <h4>Story title</h4><input type="text" name="Story title"><br>
-            <h4>User Story</h4><textarea rows="5" cols="20" name="User Story"></textarea><br>
-            <h4>Acceptance criteria</h4><textarea rows="5" cols="20" name="Acceptance criteria"></textarea><br>
-            <h4>Business value</h4><input type="number" name="Business value" value="1000" placeholder="multiple of 100" step="100" min="100" max="1500"><br>
-            <h4>Estimation (h)</h4><input type="number" name="Estimation" value="2.5" placeholder="multiple of 0.5" step="0.5" min="0.5" max="40"><br>
+            <h4>Story title</h4><input type="text" name="Story title" value={{Story_title}}><br>
+            <h4>User Story</h4><textarea rows="5" cols="20" name="User Story">{{User_story}}</textarea><br>
+            <h4>Acceptance criteria</h4><textarea rows="5" cols="20" name="Acceptance criteria">{{Acceptance}}</textarea><br>
+            <h4>Business value</h4><input type="number" name="Business value" value="1000" step="100" min="100" max="1500" value={{Business}}><br>
+            <h4>Estimation (h)</h4><input type="number" name="Estimation" value="2.5" step="0.5" min="0.5" max="40" value={{Estimation}}><br>
             <h4>Status</h4>
-            <select name="Status">
+            <select name="Status" value={{Status}}>
                 <option>Planning</option>
                 <option>TODO</option>
                 <option>In Progress</option>
