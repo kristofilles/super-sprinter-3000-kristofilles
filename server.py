@@ -2,7 +2,55 @@ from flask import Flask, render_template, redirect, request
 import csv
 
 app = Flask(__name__)
-app.secret_key = "hello"
+
+
+@app.route('/story', methods=['GET', 'POST'])
+def route_story():
+    update = None
+    return render_template('form.html', update=update)
+
+
+@app.route('/delete/<entry_id>')
+def delete_entry(entry_id):
+    table = get_table_from_file("list.csv")
+    for row in table:
+        if row[0] == str(entry_id):
+            table.remove(row)
+            break
+    write_table_to_file("list.csv", table)
+    return redirect('/')
+
+
+@app.route('/story/<entry_id>', methods=['POST', 'GET'])
+def edit_story(entry_id):
+    entry_id = entry_id
+    update = 1
+    readlist = get_table_from_file("list.csv")
+    for row in readlist:
+        if entry_id == row[0]:
+            used_list = row
+    title = used_list[1]
+    story = used_list[2]
+    criteria = used_list[3]
+    businessvalue = used_list[4]
+    estimation = used_list[5]
+    status = used_list[6]
+    return render_template('form.html', update=update, entry_id=entry_id, title=title, story=story, criteria=criteria,
+                           businessvalue=businessvalue, estimation=estimation, status=status)
+
+
+@app.route('/updating/<entry_id>', methods=['POST'])
+def updating(entry_id):
+    delete_entry(entry_id)
+    title = request.form['title']
+    story = request.form['story']
+    criteria = request.form['criteria']
+    businessvalue = request.form['businessvalue']
+    estimation = request.form['estimation']
+    status = request.form['status']
+    with open('list.csv', 'a') as appender:
+        appender.write(','.join([entry_id, title, story, criteria, businessvalue, estimation, status]) + '\n')
+    return redirect('/')
 
 
 @app.route('/')
@@ -13,53 +61,40 @@ def route_list():
     return render_template('list.html', readlist=readlist)
 
 
-@app.route('/story')
-def route_story():
-    update = None
-    return render_template('form.html', update=update)
-
-
-@app.route('/story/<entry_id>', methods=['POST', 'GET'])
-def edit_story(entry_id):
-    if request.method == 'POST':
-        with open('list.csv', 'r') as d:
-            for row in d:
-                if entry_id == row[0]:
-                    value = row[0]
-        return render_template('form.html', value=value, entry_id=entry_id)
-    else:
-        update = 1
-        with open('list.csv', 'r') as listForm:
-            readlist = list(list(row) for row in csv.reader(listForm, delimiter=','))
-        print(readlist)
-        Story_title = readlist[int(entry_id)-1][1]
-        User_story = readlist[int(entry_id)-1][2]
-        Acceptance = readlist[int(entry_id)-1][3]
-        Business = readlist[int(entry_id)-1][4]
-        Estimation = readlist[int(entry_id)-1][5]
-        Status = readlist[int(entry_id)-1][6]
-        return render_template('form.html', update=update, Story_title=Story_title, User_story=User_story, Acceptance=Acceptance, Business=Business, Estimation=Estimation, Status=Status)
-            
-
 @app.route('/save', methods=['POST'])
 def route_save():
-    Story_title = request.form['Story title']
-    User_Story = request.form['User Story']
-    Acceptance_criteria = request.form['Acceptance criteria']
-    Business_value = request.form['Business value']
-    Estimation = request.form['Estimation']
-    Status = request.form['Status']
-    with open('list.csv', 'r') as f:
-        reader = csv.reader(f)
-        readlist = [row for row in reader]
-    if readlist == []:
-        x = 1
-    else:
-        x = int(readlist[-1][0])
-        x += 1
-    with open('list.csv', 'a') as f:
-        f.write(','.join([str(x), Story_title, User_Story, Acceptance_criteria, Business_value, Estimation, Status])+'\n')
+    title = request.form['title']
+    story = request.form['story']
+    criteria = request.form['criteria']
+    businessvalue = request.form['businessvalue']
+    estimation = request.form['estimation']
+    status = request.form['status']
+    with open('list.csv', 'a') as appender:
+        appender.write(','.join([id_generator(), title, story, criteria, businessvalue, estimation, status]) + '\n')
     return redirect('/')
+
+
+def id_generator():
+    table = get_table_from_file("list.csv")
+    indices = [int(row[0]) for row in table]
+    try:
+        return str(max(indices) + 1)
+    except BaseException:
+        return str(1)
+
+
+def get_table_from_file(filename):
+    with open(filename, "r") as file:
+        lines = file.readlines()
+    table = [element.replace("\n", "").split(",") for element in lines]
+    return table
+
+
+def write_table_to_file(filename, table):
+    with open(filename, "w") as file:
+        for record in table:
+            row = ','.join(record)
+            file.write(row + "\n")
 
 
 if __name__ == "__main__":
