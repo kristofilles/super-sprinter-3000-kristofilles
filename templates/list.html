@@ -3,19 +3,20 @@
 <head>
     <meta charset="utf-8">
     <title>Super Sprinter 3000</title>
+    <link rel="stylesheet" href="static/style.css">
 </head>
     <body>
         <h2>User Story Manager</h2><br>
         <a href="/story"><input type="button" value="Add new user story"></a>
         <table>
             <tr>
-                <td>ID</td>
-                <td>Story Title</td>
-                <td>User Story</td>
-                <td>Acceptance criteria</td>
-                <td>Business value</td>
-                <td>Estimation</td>
-                <td>Status</td>
+                <th>ID</th>
+                <th>Story Title</th>
+                <th>User Story</th>
+                <th>Acceptance criteria</th>
+                <th>Business value</th>
+                <th>Estimation</th>
+                <th>Status</th>
             </tr>
             {%for line in readlist%}
             <tr>
